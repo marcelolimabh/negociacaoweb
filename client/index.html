@@ -60,17 +60,14 @@
     </table>
     <script src="js/app/models/Negociacao.js"></script>
     <script>
-    var n1 = new Negociacao();
+    var n1 = new Negociacao(new Date(), 10, 1000);
 
-    n1.quantidade = 10;
+    var volume = n1.getVolume();
+    console.log(n1.getQuantidade);
+    console.log(volume);
+    console.log(n1.getValor());
+    console.log(n1.getData());
 
-    console.log(n1);
-
-    var n2 = new Negociacao();
-
-    n2.quantidade = 20;
-
-    console.log(n2);
     
     </script>
 </body>
