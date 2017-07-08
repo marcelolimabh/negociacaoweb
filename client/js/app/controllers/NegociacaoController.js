@@ -12,11 +12,32 @@ class NegociacaoController {
         this.negociacoesView.update(this._listaNegociacoes);
         this._mensagem = new Mensagem();
         this.mensagemView = new MensagemView($("#mensagemView"));
+        let self = this;
+        this._listaNegociacoes = new Proxy(new ListaNegociacoes(), {
 
-        
+        get(target, prop, receiver) {
 
+            if(['adiciona', 'esvazia'].includes(prop) && typeof(target[prop]) == typeof(Function)) {
+
+                return function(){
+
+                console.log(`método '${prop}' interceptado`);
+
+                Reflect.apply(target[prop], target, arguments);
+
+                self.negociacoesView.update(target);
+
+                }
+        }
+
+        return Reflect.get(target, prop, receiver);
+    }
+    });
 
     }
+
+       
+    
 
     adciona(event){
         
@@ -53,4 +74,6 @@ class NegociacaoController {
             );
 
     }
+
+   
 }
