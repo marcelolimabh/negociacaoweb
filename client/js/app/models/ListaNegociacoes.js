@@ -18,7 +18,7 @@ class ListaNegociacoes{
     }
 
 
-    deletaLista(){
+    esvazia(){
         this._negociacoes=[];
        
         
