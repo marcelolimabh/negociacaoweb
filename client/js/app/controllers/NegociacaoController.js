@@ -36,33 +36,26 @@ class NegociacaoController {
 
     importaNegociacoes(){
        let service = new NegociacaoService();
-       service.obterNegociacoesDaSemana((err,negociacoes) => {
-           if(err){
-               this._mensagem.texto =err;
-               return;
-           }
+       service.obterNegociacoesDaSemana()
+       .then(negociacoes => {
            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-           
-                service.obterNegociacoesDaSemanaAnterior((err,negociacoes) => {
-                if(err){
-                    this._mensagem.texto =err;
-                    return;
-                }
-                negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-
-                        service.obterNegociacoesDaSemanaRetrasada((err,negociacoes) => {
-                    if(err){
-                        this._mensagem.texto =err;
-                        return;
-                    }
-                    negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                    this._mensagem.texto = "Negociações importadas com sucesso!";
-
-                 });
-            });
-
-       }); 
+           this._mensagem.texto ='Negociações da semana imposrtadas com sucesso!';
+       }).catch(err => this._mensagem.texto='Erro ao importar as negociações da semana!');
        
+        service.obterNegociacoesDaSemanaAnterior()
+       .then(negociacoes => {
+           negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+           this._mensagem.texto ='Negociações da semana anterioir importadas com sucesso!';
+        }).catch(err => this._mensagem.texto='Erro ao importar as negociações da semana anterior!');
+
+         service.obterNegociacoesDaSemanaRetrasada()
+       .then(negociacoes => {
+           negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+           this._mensagem.texto ='Negociações da semana retrasadad importadas com sucesso!';
+        }).catch(err => this._mensagem.texto='Erro ao importar as negociações da semana retrasada!');
+
+
+
         }
 
     apaga(){
