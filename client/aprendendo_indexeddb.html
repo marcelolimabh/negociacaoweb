@@ -62,38 +62,37 @@
             };
 
         }
-            function listaTodos() {
+        function listaTodos() {
 
-                let transaction = connection.transaction(['negociacoes'], 'readwrite');
-                let store = transaction.objectStore('negociacoes');
-                let negociacoes = [];
+            let transaction = connection.transaction(['negociacoes'], 'readwrite');
+            let store = transaction.objectStore('negociacoes');
+            let negociacoes = [];
 
-                let cursor = store.openCursor();
+            let cursor = store.openCursor();
 
-                // 
-                cursor.onsuccess = e => {
-                    let atual = e.target.result;
+            // 
+            cursor.onsuccess = e => {
+                let atual = e.target.result;
 
-                    if (atual) {
+                if (atual) {
 
-                        negociacoes.push(atual.value);
-                        atual.continue();
+                    negociacoes.push(atual.value);
+                    atual.continue();
 
-                    } else {
+                } else {
 
-                        // quando não há mais objects em nossa store.
-                        // Isso significa que já terminados de popular negociacoes
+                    // quando não há mais objects em nossa store.
+                    // Isso significa que já terminados de popular negociacoes
 
-                        console.log(negociacoes);
-                    }
+                    console.log(negociacoes);
+                }
 
-                };
+            };
 
-                cursor.onerror = e => {
-                    console.log('Error:' + e.target.error.name);
-                };
-            }
-
+            cursor.onerror = e => {
+                console.log('Error:' + e.target.error.name);
+            };
+        }
     </script>
 </body>
 
