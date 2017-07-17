@@ -86,3 +86,4 @@ var NegociacaoDAO = function () {
 
     return NegociacaoDAO;
 }();
+//# sourceMappingURL=NegociacaoDAO.js.map
