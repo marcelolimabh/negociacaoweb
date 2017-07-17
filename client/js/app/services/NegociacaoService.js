@@ -8,7 +8,7 @@ class NegociacaoService {
 
         return new Promise((resolve, reject) => {
 
-            let xhr = new XMLHttpRequest();
+           
             this._http.get('negociacoes/semana')
                 .then(negociacoes => {
                     resolve(negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
@@ -24,7 +24,7 @@ class NegociacaoService {
     obterNegociacoesDaSemanaAnterior() {
         return new Promise((resolve, reject) => {
 
-            let xhr = new XMLHttpRequest();
+          
             this._http.get('negociacoes/anterior')
                 .then(negociacoes => {
                     resolve(negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
@@ -40,7 +40,7 @@ class NegociacaoService {
     obterNegociacoesDaSemanaRetrasada() {
         return new Promise((resolve, reject) => {
 
-            let xhr = new XMLHttpRequest();
+         
             this._http.get('negociacoes/retrasada')
                 .then(negociacoes => {
                     resolve(negociacoes.map(objeto => new Negociacao(new Date(objeto.data), objeto.quantidade, objeto.valor)));
@@ -73,7 +73,7 @@ class NegociacaoService {
     lista() {
         return ConnectionFactory
             .getConnection()
-            .then(connection => new NegociacaoDao(connection))
+            .then(connection => new NegociacaoDAO(connection))
             .then(dao => dao.listaTodos())
             .catch(erro => {
                 console.log(erro);
