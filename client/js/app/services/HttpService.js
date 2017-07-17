@@ -1,79 +1,94 @@
-class HttpService{
+'use strict';
 
-    /*
-    Implementação com requisicao ajax
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    get(url){
-         
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-        return new Promise((resolve, reject) => {
+var HttpService = function () {
+    function HttpService() {
+        _classCallCheck(this, HttpService);
+    }
 
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.onreadystatechange = () => {
-                if(xhr.readyState == 4) {
-                    if(xhr.status == 200) {
-                        resolve(JSON.parse(xhr.responseText));
-                    } else {
-                        console.log(xhr.responseText);
-                        reject(xhr.responseText);
+    _createClass(HttpService, [{
+        key: '_handleErrors',
+
+
+        /*
+        Implementação com requisicao ajax
+         get(url){
+             
+             return new Promise((resolve, reject) => {
+                 let xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState == 4) {
+                        if(xhr.status == 200) {
+                            resolve(JSON.parse(xhr.responseText));
+                        } else {
+                            console.log(xhr.responseText);
+                            reject(xhr.responseText);
+                        }
                     }
                 }
+                 xhr.send();
+            });
+        }
+         post(url, dado){
+            return new Promise((resolve, reject) =>{
+                let  xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.onreadystatechange = ()=>{
+                    if(xhr.readyState==4){
+                        if(xhr.status==200){
+                            resolve(JSON.parse(xhr.responseText));
+                        }else{
+                            reject(xhr.responseText);
+                        }
+                    }
+                };
+                xhr.send(JSON.stringify(dado));
+            });
+        }
+        */
+
+        /**
+         * Nova implementacao com ES2016 utilizado fetch
+         */
+
+        value: function _handleErrors(res) {
+            if (!res.ok) {
+
+                console.log(es.statusText);
+                throw new Error(res.statusText);
             }
+            return res;
+        }
+    }, {
+        key: 'get',
+        value: function get(url) {
+            var _this = this;
 
-            xhr.send();
-        });
-    }
+            return fetch(url).then(function (res) {
+                return _this._handleErrors(res);
+            }).then(function (res) {
+                return res.json();
+            });
+        }
+    }, {
+        key: 'post',
+        value: function post(url, dado) {
+            var _this2 = this;
 
-    post(url, dado){
-        return new Promise((resolve, reject) =>{
-            let  xhr = new XMLHttpRequest();
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.onreadystatechange = ()=>{
-                if(xhr.readyState==4){
-                    if(xhr.status==200){
-                        resolve(JSON.parse(xhr.responseText));
-                    }else{
-                        reject(xhr.responseText);
-                    }
-                }
-            };
-            xhr.send(JSON.stringify(dado));
-        });
-    }
-    */
+            return fetch(url, {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'post',
+                body: JSON.stringify(dado)
+            }).then(function (res) {
+                return _this2._handleErrors(res);
+            });
+        }
+    }]);
 
-    /**
-     * Nova implementacao com ES2016 utilizado fetch
-     */
-
-     _handleErrors(res){
-         if(!res.ok) {
-
-            console.log(es.statusText);
-            throw new Error(res.statusText);
-         }
-         return res;   
-     }
-
-     get(url){
-
-       return fetch(url)
-        .then(res => this._handleErrors(res))
-        .then(res => res.json());
-     }
-
-     post(url, dado){
-
-        return fetch(url, {
-            headers: { 'Content-Type': 'application/json' },
-            method: 'post',
-            body: JSON.stringify(dado)
-        })
-        .then(res => this._handleErrors(res));
-     }
-
-
-
-}
+    return HttpService;
+}();
