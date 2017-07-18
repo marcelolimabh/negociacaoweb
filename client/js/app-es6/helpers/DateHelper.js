@@ -1,4 +1,4 @@
-class DateHelper{
+export class DateHelper{
 
     static dataParaTexto(data) {
 

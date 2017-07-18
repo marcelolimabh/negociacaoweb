@@ -1,14 +1,14 @@
-var ConnectionFactory = function () {
+
 
     const stores = ['negociacoes'];
     const version = 4;
     const dbName = 'negociacaodb';
 
-    var connection = null;
+    let connection = null;
 
-    var close = null;
+    let close = null;
 
-    return class ConnectionFactory {
+    export  class ConnectionFactory {
 
         constructor() {
 
@@ -65,4 +65,3 @@ var ConnectionFactory = function () {
             }
         }
     }
-}();

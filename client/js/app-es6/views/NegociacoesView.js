@@ -1,4 +1,8 @@
-class NegociacoesView extends View{
+import {View} from './View.js'
+import {DateHelper} from '../helpers/DateHelper.js'
+import {Negociacao} from '../models/Negociacao.js'
+
+export class NegociacoesView extends View{
 
 
     constructor(elemento){

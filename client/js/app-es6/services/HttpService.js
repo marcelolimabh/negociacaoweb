@@ -1,4 +1,4 @@
-class HttpService{
+export class HttpService{
 
     /*
     Implementação com requisicao ajax
@@ -24,7 +24,7 @@ class HttpService{
             xhr.send();
         });
     }
-
+ 
     post(url, dado){
         return new Promise((resolve, reject) =>{
             let  xhr = new XMLHttpRequest();
